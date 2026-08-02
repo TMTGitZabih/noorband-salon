@@ -1,0 +1,66 @@
+<div class="dash-header">
+  <h2>Salon Settings</h2>
+  <p>Manage the contact info and opening hours shown across the website.</p>
+</div>
+
+<% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+
+<form action="/admin/settings" method="POST" class="card dash-form">
+  <h3>Business Info</h3>
+  <div class="form-row-2">
+    <div>
+      <label for="name">Salon Name</label>
+      <input type="text" id="name" name="name" value="<%= settings.name %>" required />
+    </div>
+    <div>
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" value="<%= settings.address %>" />
+    </div>
+  </div>
+
+  <div class="form-row-2">
+    <div>
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" value="<%= settings.phone %>" />
+    </div>
+    <div>
+      <label for="whatsapp">WhatsApp (salon's own number, for notifications)</label>
+      <input type="tel" id="whatsapp" name="whatsapp" value="<%= settings.whatsapp %>" />
+    </div>
+  </div>
+
+  <div class="form-row-2">
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="<%= settings.email %>" />
+    </div>
+  </div>
+
+  <h3>Social Links</h3>
+  <div class="form-row-2">
+    <div>
+      <label for="instagram">Instagram URL</label>
+      <input type="text" id="instagram" name="instagram" value="<%= settings.instagram %>" />
+    </div>
+    <div>
+      <label for="facebook">Facebook URL</label>
+      <input type="text" id="facebook" name="facebook" value="<%= settings.facebook %>" />
+    </div>
+  </div>
+  <label for="tiktok">TikTok URL</label>
+  <input type="text" id="tiktok" name="tiktok" value="<%= settings.tiktok %>" />
+
+  <h3>Opening Hours</h3>
+  <div class="working-hours-editor">
+    <% dayNames.forEach(function(day) { %>
+      <% var oh = settings.openingHours.find(function(o) { return o.day === day; }) || { day: day, hours: '' }; %>
+      <div class="wh-row">
+        <label class="wh-check-static"><%= day %></label>
+        <input type="hidden" name="day" value="<%= day %>" />
+        <input type="text" name="hours" value="<%= oh.hours %>" placeholder="e.g. 10:00 AM - 8:00 PM or Closed" />
+      </div>
+    <% }) %>
+  </div>
+
+  <button type="submit" class="btn btn-primary" style="margin-top:1rem">Save Settings</button>
+</form>

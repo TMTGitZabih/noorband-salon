@@ -1,0 +1,78 @@
+<div class="dash-header">
+  <h2><%= artist ? 'Edit Artist' : 'Add Artist' %></h2>
+</div>
+
+<% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+<form action="<%= artist ? '/admin/artists/' + artist._id : '/admin/artists' %>" method="POST" class="card dash-form">
+  <div class="form-row-2">
+    <div>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" value="<%= artistUser ? artistUser.name : '' %>" required />
+    </div>
+    <div>
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" value="<%= artistUser ? artistUser.phone : '' %>" />
+    </div>
+  </div>
+
+  <% if (!artist) { %>
+    <div class="form-row-2">
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div>
+        <label for="password">Temporary Password</label>
+        <input type="text" id="password" name="password" minlength="6" required />
+      </div>
+    </div>
+  <% } %>
+
+  <label for="bio">Biography</label>
+  <textarea id="bio" name="bio" rows="3"><%= artist ? artist.bio : '' %></textarea>
+
+  <div class="form-row-2">
+    <div>
+      <label for="experienceYears">Years of Experience</label>
+      <input type="number" id="experienceYears" name="experienceYears" min="0" value="<%= artist ? artist.experienceYears : 0 %>" />
+    </div>
+    <div>
+      <label for="specialties">Specialties (comma separated)</label>
+      <input type="text" id="specialties" name="specialties" value="<%= artist ? (artist.specialties || []).join(', ') : '' %>" />
+    </div>
+  </div>
+
+  <label for="services">Services Offered</label>
+  <select id="services" name="services" multiple size="6">
+    <% services.forEach(function(s) { %>
+      <% var selected = artist && artist.services && artist.services.some(function(id){ return id.toString() === s._id.toString(); }); %>
+      <option value="<%= s._id %>" <%= selected ? 'selected' : '' %>><%= s.name %></option>
+    <% }) %>
+  </select>
+  <p class="form-hint">Hold Ctrl / Cmd to select multiple services.</p>
+
+  <% if (artist) { %>
+    <h3>Working Hours</h3>
+    <div class="working-hours-editor">
+      <% artist.workingHours.forEach(function(wh) { %>
+        <div class="wh-row">
+          <label class="wh-check">
+            <input type="checkbox" name="isWorking" value="<%= wh.day %>" <%= wh.isWorking ? 'checked' : '' %> />
+            <%= wh.day %>
+          </label>
+          <input type="hidden" name="workDay" value="<%= wh.day %>" />
+          <input type="time" name="startTime" value="<%= wh.startTime %>" />
+          <input type="time" name="endTime" value="<%= wh.endTime %>" />
+        </div>
+      <% }) %>
+    </div>
+
+    <label class="wh-check" style="margin-top:1rem">
+      <input type="checkbox" name="isActive" <%= artist.isActive ? 'checked' : '' %> />
+      Active (visible on the site)
+    </label>
+  <% } %>
+
+  <button type="submit" class="btn btn-primary" style="margin-top:1rem">Save Artist</button>
+</form>

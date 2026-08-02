@@ -1,0 +1,38 @@
+<section class="page-hero">
+  <div class="container">
+    <h1><%= artist.user.name %></h1>
+    <p><%= (artist.specialties || []).join(' · ') %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container artist-profile-grid">
+    <div class="artist-photo-large" style="background-image:url('<%= artist.user.profileImage %>')"></div>
+    <div>
+      <h2>Biography</h2>
+      <p><%= artist.bio || 'Biography coming soon.' %></p>
+
+      <h3>Experience</h3>
+      <p><%= artist.experienceYears %> years in the beauty industry</p>
+
+      <h3>Services Offered</h3>
+      <ul class="checklist">
+        <% (artist.services || []).forEach(function(s) { %>
+          <li><%= s.name %> &mdash; $<%= s.price %></li>
+        <% }) %>
+        <% if (!artist.services || !artist.services.length) { %>
+          <li>Services coming soon</li>
+        <% } %>
+      </ul>
+
+      <h3>Working Hours</h3>
+      <ul class="hours-list">
+        <% (artist.workingHours || []).forEach(function(wh) { %>
+          <li><span><%= wh.day %></span><span><%= wh.isWorking ? wh.startTime + ' - ' + wh.endTime : 'Closed' %></span></li>
+        <% }) %>
+      </ul>
+
+      <a href="/book?artist=<%= artist._id %>" class="btn btn-primary btn-lg">Book This Artist</a>
+    </div>
+  </div>
+</section>

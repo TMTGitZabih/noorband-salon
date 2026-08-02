@@ -1,0 +1,8 @@
+<header class="dashboard-topbar">
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+  <h1 class="topbar-title"><%= title %></h1>
+  <div class="topbar-user">
+    <span><%= currentUser ? currentUser.name : '' %></span>
+    <span class="role-badge"><%= currentUser ? currentUser.role : '' %></span>
+  </div>
+</header>

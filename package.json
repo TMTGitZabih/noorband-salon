@@ -1,0 +1,32 @@
+{
+  "name": "noorband-salon",
+  "version": "1.0.0",
+  "description": "NoorBand Salon - full-stack salon booking website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node seed/seed.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.0",
+    "express-validator": "^7.1.0",
+    "method-override": "^3.0.0",
+    "mongodb": "^7.5.0",
+    "mongoose": "^8.5.0",
+    "multer": "^1.4.5-lts.1",
+    "twilio": "^5.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

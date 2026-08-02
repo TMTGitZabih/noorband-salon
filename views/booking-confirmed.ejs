@@ -1,0 +1,15 @@
+<section class="section auth-page">
+  <div class="auth-card confirmation-card">
+    <div class="confirm-icon">&#10003;</div>
+    <h1>Booking Confirmed!</h1>
+    <p class="auth-subtitle">Thank you, <%= booking.customerName %>. Your appointment is booked.</p>
+
+    <div class="booking-summary">
+      <p><strong>Service:</strong> <%= booking.service.name %></p>
+      <p><strong>Date:</strong> <%= booking.date %> at <%= booking.time %></p>
+      <p><strong>Status:</strong> <%= booking.status %></p>
+    </div>
+
+    <a href="/" class="btn btn-primary btn-block">Back to Home</a>
+  </div>
+</section>

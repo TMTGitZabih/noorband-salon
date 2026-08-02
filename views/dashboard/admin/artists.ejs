@@ -1,0 +1,29 @@
+<div class="dash-header dash-header-row">
+  <div>
+    <h2>Manage Artists</h2>
+    <p>Create, edit, and manage artist accounts.</p>
+  </div>
+  <a href="/admin/artists/new" class="btn btn-primary">+ Add Artist</a>
+</div>
+
+<table class="data-table">
+  <thead><tr><th>Name</th><th>Email</th><th>Experience</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% artists.forEach(function(a) { %>
+      <tr data-artist-row="<%= a._id %>">
+        <td><%= a.user.name %></td>
+        <td><%= a.user.email %></td>
+        <td><%= a.experienceYears %> yrs</td>
+        <td><span class="status-pill <%= a.isActive ? 'status-confirmed' : 'status-cancelled' %>"><%= a.isActive ? 'Active' : 'Inactive' %></span></td>
+        <td class="table-actions">
+          <a href="/admin/artists/<%= a._id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+          <button class="btn btn-sm btn-outline" data-action="reset-password" data-id="<%= a._id %>">Reset Password</button>
+          <button class="btn btn-sm btn-danger" data-action="delete-artist" data-id="<%= a._id %>">Delete</button>
+        </td>
+      </tr>
+    <% }) %>
+    <% if (!artists.length) { %>
+      <tr><td colspan="5" class="empty-state">No artists yet. Click "+ Add Artist" to create one.</td></tr>
+    <% } %>
+  </tbody>
+</table>

@@ -1,0 +1,48 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <div class="brand footer-brand">
+        <span class="brand-mark">N</span>
+        <span class="brand-name"><%= salon.name %></span>
+      </div>
+      <p>Where beauty meets artistry. Professional makeup, hair, and skincare services tailored to you.</p>
+      <div class="social-links">
+        <a href="<%= salon.instagram %>" aria-label="Instagram" target="_blank" rel="noopener">IG</a>
+        <a href="<%= salon.facebook %>" aria-label="Facebook" target="_blank" rel="noopener">FB</a>
+        <a href="<%= salon.tiktok %>" aria-label="TikTok" target="_blank" rel="noopener">TT</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/about">About Us</a>
+      <a href="/services">Services</a>
+      <a href="/artists">Our Artists</a>
+      <a href="/gallery">Gallery</a>
+      <a href="/book">Book an Appointment</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p><%= salon.address %></p>
+      <p>Phone: <a href="tel:<%= salon.phone %>"><%= salon.phone %></a></p>
+      <p>WhatsApp: <a href="https://wa.me/<%= (salon.whatsapp || '').replace(/[^0-9]/g,'') %>" target="_blank" rel="noopener"><%= salon.whatsapp %></a></p>
+      <p>Email: <a href="mailto:<%= salon.email %>"><%= salon.email %></a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Opening Hours</h4>
+      <ul class="hours-list">
+        <% (salon.openingHours || []).forEach(function(oh) { %>
+          <li><span><%= oh.day %></span><span><%= oh.hours %></span></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <%= new Date().getFullYear() %> <%= salon.name %>. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

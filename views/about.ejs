@@ -1,0 +1,43 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>About Us</h1>
+    <p>Get to know the story behind <%= salon.name %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container about-grid">
+    <div>
+      <h2>Our Story</h2>
+      <p><%= salon.name %> was founded with a simple belief: everyone deserves to feel beautiful and confident. What started as a small studio has grown into a trusted destination for makeup, hair, and skincare, built on skill, care, and genuine passion for the craft.</p>
+
+      <h2>Our Mission</h2>
+      <p>To deliver exceptional beauty services in a warm, professional environment, helping every client look and feel their best for life's biggest moments and everyday confidence alike.</p>
+
+      <h2>Our Vision</h2>
+      <p>To be the region's most trusted salon, known for artistry, integrity, and the relationships we build with every client who walks through our doors.</p>
+
+      <h2>Why Choose <%= salon.name %></h2>
+      <ul class="checklist">
+        <li>Experienced, specialized artists for every service</li>
+        <li>Easy online booking with instant WhatsApp confirmation</li>
+        <li>A clean, welcoming, and relaxing space</li>
+        <li>Transparent pricing, no surprises</li>
+      </ul>
+    </div>
+
+    <aside class="about-sidebar card">
+      <h3>Business Information</h3>
+      <p><strong>Address</strong><br><%= salon.address %></p>
+      <p><strong>Phone</strong><br><a href="tel:<%= salon.phone %>"><%= salon.phone %></a></p>
+      <p><strong>WhatsApp</strong><br><a href="https://wa.me/<%= (salon.whatsapp||'').replace(/[^0-9]/g,'') %>" target="_blank" rel="noopener"><%= salon.whatsapp %></a></p>
+      <h4>Opening Hours</h4>
+      <ul class="hours-list">
+        <% (salon.openingHours || []).forEach(function(oh) { %>
+          <li><span><%= oh.day %></span><span><%= oh.hours %></span></li>
+        <% }) %>
+      </ul>
+      <a href="/book" class="btn btn-primary btn-block">Book an Appointment</a>
+    </aside>
+  </div>
+</section>

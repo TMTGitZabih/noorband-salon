@@ -1,0 +1,44 @@
+<div class="dash-header">
+  <h2>Manage Gallery</h2>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+<div class="card dash-form">
+  <h3>Add Image</h3>
+  <form action="/admin/gallery" method="POST" enctype="multipart/form-data">
+    <label for="title">Title (optional)</label>
+    <input type="text" id="title" name="title" />
+
+    <label for="category">Category</label>
+    <select id="category" name="category" required>
+      <option>Makeup</option>
+      <option>Hairstyle</option>
+      <option>Bridal</option>
+      <option>Before & After</option>
+    </select>
+
+    <label for="image">Upload Image</label>
+    <input type="file" id="image" name="image" accept="image/*" />
+
+    <label for="imageUrl">...or Image URL</label>
+    <input type="text" id="imageUrl" name="imageUrl" placeholder="https://..." />
+
+    <button type="submit" class="btn btn-primary">Add to Gallery</button>
+  </form>
+</div>
+
+<div class="gallery-grid admin-gallery-grid">
+  <% images.forEach(function(img) { %>
+    <div class="gallery-item" data-gallery-item="<%= img._id %>">
+      <img src="<%= img.imageUrl %>" alt="<%= img.title || img.category %>" />
+      <div class="gallery-item-overlay">
+        <span><%= img.category %></span>
+        <button class="btn btn-sm btn-danger" data-action="delete-gallery" data-id="<%= img._id %>">Delete</button>
+      </div>
+    </div>
+  <% }) %>
+  <% if (!images.length) { %>
+    <p class="empty-state">No gallery images yet.</p>
+  <% } %>
+</div>

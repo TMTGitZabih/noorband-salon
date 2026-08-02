@@ -1,0 +1,101 @@
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <p class="eyebrow">Welcome to</p>
+    <h1><%= salon.name %></h1>
+    <p class="hero-subtitle">Where every look tells your story. Professional makeup, hair styling, and beauty services in a space made for you.</p>
+    <div class="hero-actions">
+      <a href="/book" class="btn btn-primary btn-lg">Book an Appointment</a>
+      <a href="/services" class="btn btn-outline-light btn-lg">Explore Services</a>
+    </div>
+  </div>
+</section>
+
+<section class="section intro-section">
+  <div class="container intro-grid">
+    <div>
+      <p class="eyebrow">About Us</p>
+      <h2>Beauty, Crafted With Care</h2>
+      <p><%= salon.name %> brings together skilled artists and a warm, welcoming space so every client leaves feeling confident and beautiful. From bridal transformations to everyday glam, we treat every appointment as an art form.</p>
+      <a href="/about" class="link-arrow">Learn more about us &rarr;</a>
+    </div>
+    <div class="intro-stats">
+      <div class="stat-card"><span class="stat-number">500+</span><span>Happy Clients</span></div>
+      <div class="stat-card"><span class="stat-number">10+</span><span>Expert Artists</span></div>
+      <div class="stat-card"><span class="stat-number">15+</span><span>Services Offered</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section services-preview">
+  <div class="container">
+    <p class="eyebrow center">What We Offer</p>
+    <h2 class="center">Featured Services</h2>
+    <div class="grid grid-3">
+      <% featuredServices.forEach(function(s) { %>
+        <div class="card service-card">
+          <div class="card-image" style="background-image:url('<%= s.image %>')"></div>
+          <div class="card-body">
+            <h3><%= s.name %></h3>
+            <p><%= s.description %></p>
+            <div class="card-meta">
+              <span class="price">$<%= s.price %></span>
+              <span class="duration"><%= s.durationMinutes %> min</span>
+            </div>
+            <a href="/book" class="btn btn-outline btn-sm">Book This Service</a>
+          </div>
+        </div>
+      <% }) %>
+      <% if (!featuredServices.length) { %>
+        <p class="empty-state">Services will appear here once added by the admin.</p>
+      <% } %>
+    </div>
+    <div class="center" style="margin-top:2rem">
+      <a href="/services" class="btn btn-secondary">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<section class="section artists-preview alt-bg">
+  <div class="container">
+    <p class="eyebrow center">Meet the Team</p>
+    <h2 class="center">Featured Artists</h2>
+    <div class="grid grid-4">
+      <% featuredArtists.forEach(function(a) { %>
+        <div class="card artist-card">
+          <div class="artist-photo" style="background-image:url('<%= a.user.profileImage %>')"></div>
+          <h3><%= a.user.name %></h3>
+          <p class="artist-specialty"><%= (a.specialties || []).slice(0,2).join(', ') %></p>
+          <a href="/artists/<%= a._id %>" class="link-arrow">View Profile &rarr;</a>
+        </div>
+      <% }) %>
+      <% if (!featuredArtists.length) { %>
+        <p class="empty-state">Artist profiles will appear here once added by the admin.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials-section">
+  <div class="container">
+    <p class="eyebrow center">Testimonials</p>
+    <h2 class="center">What Our Clients Say</h2>
+    <div class="grid grid-3">
+      <% testimonials.forEach(function(t) { %>
+        <div class="card testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>&ldquo;<%= t.text %>&rdquo;</p>
+          <span class="testimonial-name">&mdash; <%= t.name %></span>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container cta-content">
+    <h2>Ready to Book Your Appointment?</h2>
+    <p>Choose your artist, pick a time, and we'll take care of the rest.</p>
+    <a href="/book" class="btn btn-primary btn-lg">Book Now</a>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<div class="dash-header">
+  <h2>My Profile</h2>
+</div>
+
+<% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+<% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+<div class="dash-grid-2">
+  <form action="/artist/profile" method="POST" class="card dash-form">
+    <h3>Profile Details</h3>
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" value="<%= artist.user.phone %>" />
+
+    <label for="bio">Biography</label>
+    <textarea id="bio" name="bio" rows="4"><%= artist.bio %></textarea>
+
+    <label for="experienceYears">Years of Experience</label>
+    <input type="number" id="experienceYears" name="experienceYears" min="0" value="<%= artist.experienceYears %>" />
+
+    <label for="specialties">Specialties (comma separated)</label>
+    <input type="text" id="specialties" name="specialties" value="<%= (artist.specialties || []).join(', ') %>" />
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+
+  <form action="/artist/change-password" method="POST" class="card dash-form">
+    <h3>Change Password</h3>
+    <label for="currentPassword">Current Password</label>
+    <input type="password" id="currentPassword" name="currentPassword" required />
+
+    <label for="newPassword">New Password</label>
+    <input type="password" id="newPassword" name="newPassword" minlength="6" required />
+
+    <label for="confirmPassword">Confirm New Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" minlength="6" required />
+
+    <button type="submit" class="btn btn-secondary">Change Password</button>
+  </form>
+</div>

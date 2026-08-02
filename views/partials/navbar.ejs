@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="container nav-container">
+    <a href="/" class="brand">
+      <span class="brand-mark">N</span>
+      <span class="brand-name"><%= salon.name %></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="/">Home</a>
+      <a href="/about">About Us</a>
+      <a href="/services">Services</a>
+      <a href="/artists">Our Artists</a>
+      <a href="/gallery">Gallery</a>
+      <a href="/contact">Contact</a>
+      <% if (currentUser) { %>
+        <a href="<%= currentUser.role === 'admin' ? '/admin/dashboard' : '/artist/dashboard' %>" class="nav-dashboard-link">Dashboard</a>
+      <% } else { %>
+        <a href="/login">Login</a>
+      <% } %>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="/book" class="btn btn-primary">Book Now</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

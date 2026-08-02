@@ -1,0 +1,25 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>Gallery</h1>
+    <p>A look at our recent work</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <% var categories = Object.keys(grouped); %>
+    <% if (!categories.length) { %>
+      <p class="empty-state center">Gallery images will appear here once added by the admin.</p>
+    <% } %>
+    <% categories.forEach(function(cat) { %>
+      <h2 class="category-title"><%= cat %></h2>
+      <div class="gallery-grid">
+        <% grouped[cat].forEach(function(img) { %>
+          <div class="gallery-item">
+            <img src="<%= img.imageUrl %>" alt="<%= img.title || cat %>" loading="lazy" />
+          </div>
+        <% }) %>
+      </div>
+    <% }) %>
+  </div>
+</section>

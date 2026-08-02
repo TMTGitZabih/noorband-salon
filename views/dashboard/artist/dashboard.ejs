@@ -1,0 +1,57 @@
+<div class="dash-header">
+  <h2>Welcome back, <%= artist.user.name %></h2>
+  <p>Here's your schedule at a glance.</p>
+</div>
+
+<div class="dash-section">
+  <h3>Today's Appointments</h3>
+  <% if (!todayBookings.length) { %>
+    <p class="empty-state">No appointments today.</p>
+  <% } else { %>
+    <table class="data-table">
+      <thead><tr><th>Time</th><th>Customer</th><th>Service</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% todayBookings.forEach(function(b) { %>
+          <tr data-booking-row="<%= b._id %>">
+            <td><%= b.time %></td>
+            <td><%= b.customerName %></td>
+            <td><%= b.service.name %></td>
+            <td><%= b.phone %></td>
+            <td><span class="status-pill status-<%= b.status %>"><%= b.status %></span></td>
+            <td class="table-actions">
+              <% if (b.status === 'confirmed') { %>
+                <button class="btn btn-sm btn-primary" data-action="complete" data-id="<%= b._id %>">Mark Completed</button>
+                <button class="btn btn-sm btn-outline" data-action="cancel" data-id="<%= b._id %>">Cancel</button>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<div class="dash-section">
+  <h3>Upcoming Appointments</h3>
+  <% if (!upcomingBookings.length) { %>
+    <p class="empty-state">No upcoming appointments.</p>
+  <% } else { %>
+    <table class="data-table">
+      <thead><tr><th>Date</th><th>Time</th><th>Customer</th><th>Service</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% upcomingBookings.forEach(function(b) { %>
+          <tr data-booking-row="<%= b._id %>">
+            <td><%= b.date %></td>
+            <td><%= b.time %></td>
+            <td><%= b.customerName %></td>
+            <td><%= b.service.name %></td>
+            <td><span class="status-pill status-<%= b.status %>"><%= b.status %></span></td>
+            <td class="table-actions">
+              <button class="btn btn-sm btn-outline" data-action="cancel" data-id="<%= b._id %>">Cancel</button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>

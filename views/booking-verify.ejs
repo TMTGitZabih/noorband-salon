@@ -1,0 +1,23 @@
+<section class="section auth-page">
+  <div class="auth-card">
+    <h1>Verify Your WhatsApp Number</h1>
+    <p class="auth-subtitle">We sent a 6-digit code to <strong><%= booking.whatsapp %></strong>. Enter it below to confirm your appointment.</p>
+
+    <div id="verifyAlert" class="alert alert-error" style="display:none"><%= error || '' %></div>
+
+    <form id="verifyForm" class="auth-form" data-booking-id="<%= booking._id %>">
+      <label for="otp">Verification Code</label>
+      <input type="text" id="otp" name="otp" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required autofocus />
+      <button type="submit" class="btn btn-primary btn-block">Verify & Confirm Booking</button>
+    </form>
+
+    <button id="resendOtp" class="btn btn-outline btn-block" style="margin-top:0.75rem" data-booking-id="<%= booking._id %>">Resend Code</button>
+
+    <div class="booking-summary">
+      <h4>Appointment Summary</h4>
+      <p><strong>Service:</strong> <%= booking.service.name %></p>
+      <p><strong>Date:</strong> <%= booking.date %> at <%= booking.time %></p>
+    </div>
+  </div>
+</section>
+<script src="/js/booking.js"></script>

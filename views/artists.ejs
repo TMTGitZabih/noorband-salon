@@ -1,0 +1,28 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>Our Artists</h1>
+    <p>Meet the talented team behind <%= salon.name %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3">
+      <% artists.forEach(function(a) { %>
+        <div class="card artist-card">
+          <div class="artist-photo" style="background-image:url('<%= a.user.profileImage %>')"></div>
+          <h3><%= a.user.name %></h3>
+          <p class="artist-specialty"><%= (a.specialties || []).join(', ') %></p>
+          <p class="artist-exp"><%= a.experienceYears %> years experience</p>
+          <div class="artist-actions">
+            <a href="/artists/<%= a._id %>" class="btn btn-outline btn-sm">View Profile</a>
+            <a href="/book?artist=<%= a._id %>" class="btn btn-primary btn-sm">Book This Artist</a>
+          </div>
+        </div>
+      <% }) %>
+      <% if (!artists.length) { %>
+        <p class="empty-state center">Artist profiles will appear here once added by the admin.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

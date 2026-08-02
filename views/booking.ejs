@@ -1,0 +1,78 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>Book an Appointment</h1>
+    <p>Choose your artist, service, and preferred time</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <form id="bookingForm" class="card booking-form" data-preselected-artist="<%= preselectedArtist %>">
+      <div id="bookingAlert" class="alert alert-error" style="display:none"></div>
+
+      <div class="form-row-2">
+        <div>
+          <label for="artistId">Choose an Artist</label>
+          <select id="artistId" name="artistId" required>
+            <option value="">Select an artist</option>
+            <% artists.forEach(function(a) { %>
+              <option value="<%= a._id %>"><%= a.user.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div>
+          <label for="serviceId">Choose a Service</label>
+          <select id="serviceId" name="serviceId" required>
+            <option value="">Select a service</option>
+            <% services.forEach(function(s) { %>
+              <option value="<%= s._id %>" data-duration="<%= s.durationMinutes %>"><%= s.name %> ($<%= s.price %>, <%= s.durationMinutes %> min)</option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div>
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+        <div>
+          <label for="time">Available Time</label>
+          <select id="time" name="time" required disabled>
+            <option value="">Select artist, service, and date first</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div>
+          <label for="customerName">Your Name</label>
+          <input type="text" id="customerName" name="customerName" required />
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div>
+          <label for="whatsapp">WhatsApp Number</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="+1 234 567 8900" required />
+        </div>
+        <div>
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" name="email" />
+        </div>
+      </div>
+
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" rows="3" placeholder="Anything you'd like your artist to know?"></textarea>
+
+      <p class="form-hint">After submitting, we'll text a verification code to your WhatsApp number to confirm your booking is real.</p>
+
+      <button type="submit" class="btn btn-primary btn-block btn-lg" id="bookingSubmit">Request Appointment</button>
+    </form>
+  </div>
+</section>
+<script src="/js/booking.js"></script>

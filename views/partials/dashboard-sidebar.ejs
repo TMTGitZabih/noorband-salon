@@ -1,0 +1,27 @@
+<aside class="dashboard-sidebar" id="dashboardSidebar">
+  <a href="/" class="brand sidebar-brand">
+    <span class="brand-mark">N</span>
+    <span class="brand-name"><%= salon.name %></span>
+  </a>
+
+  <% if (currentUser && currentUser.role === 'admin') { %>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard" class="<%= title === 'Admin Dashboard' ? 'active' : '' %>">Overview</a>
+      <a href="/admin/bookings" class="<%= title === 'All Bookings' ? 'active' : '' %>">Bookings</a>
+      <a href="/admin/artists" class="<%= title.indexOf('Artist') === 0 || title === 'Manage Artists' ? 'active' : '' %>">Artists</a>
+      <a href="/admin/services" class="<%= title === 'Manage Services' ? 'active' : '' %>">Services</a>
+      <a href="/admin/gallery" class="<%= title === 'Manage Gallery' ? 'active' : '' %>">Gallery</a>
+      <a href="/admin/settings" class="<%= title === 'Salon Settings' ? 'active' : '' %>">Settings</a>
+    </nav>
+  <% } else if (currentUser && currentUser.role === 'artist') { %>
+    <nav class="sidebar-nav">
+      <a href="/artist/dashboard" class="<%= title === 'My Dashboard' ? 'active' : '' %>">My Schedule</a>
+      <a href="/artist/profile" class="<%= title === 'My Profile' ? 'active' : '' %>">My Profile</a>
+      <a href="/" target="_blank">View Site</a>
+    </nav>
+  <% } %>
+
+  <form action="/logout" method="POST" class="sidebar-logout">
+    <button type="submit" class="btn btn-outline btn-block">Log Out</button>
+  </form>
+</aside>

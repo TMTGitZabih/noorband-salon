@@ -1,0 +1,41 @@
+<div class="dash-header">
+  <h2>All Bookings</h2>
+</div>
+
+<form class="filter-bar" method="GET" action="/admin/bookings">
+  <select name="status" onchange="this.form.submit()">
+    <option value="">All Statuses</option>
+    <option value="pending_verification" <%= filterStatus === 'pending_verification' ? 'selected' : '' %>>Pending Verification</option>
+    <option value="confirmed" <%= filterStatus === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
+    <option value="completed" <%= filterStatus === 'completed' ? 'selected' : '' %>>Completed</option>
+    <option value="cancelled" <%= filterStatus === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+  </select>
+  <input type="date" name="date" value="<%= filterDate %>" onchange="this.form.submit()" />
+  <a href="/admin/bookings" class="btn btn-sm btn-outline">Clear Filters</a>
+</form>
+
+<table class="data-table">
+  <thead><tr><th>Customer</th><th>Phone</th><th>Artist</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% bookings.forEach(function(b) { %>
+      <tr data-booking-row="<%= b._id %>">
+        <td><%= b.customerName %></td>
+        <td><%= b.phone %></td>
+        <td><%= b.artist && b.artist.user ? b.artist.user.name : '-' %></td>
+        <td><%= b.service ? b.service.name : '-' %></td>
+        <td><%= b.date %></td>
+        <td><%= b.time %></td>
+        <td><span class="status-pill status-<%= b.status %>"><%= b.status %></span></td>
+        <td class="table-actions">
+          <% if (b.status !== 'cancelled' && b.status !== 'completed') { %>
+            <button class="btn btn-sm btn-outline" data-action="admin-status" data-id="<%= b._id %>" data-status="completed">Complete</button>
+            <button class="btn btn-sm btn-danger" data-action="admin-status" data-id="<%= b._id %>" data-status="cancelled">Cancel</button>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+    <% if (!bookings.length) { %>
+      <tr><td colspan="8" class="empty-state">No bookings match these filters.</td></tr>
+    <% } %>
+  </tbody>
+</table>

@@ -1,0 +1,36 @@
+<div class="dash-header">
+  <h2>Overview</h2>
+  <p>A quick summary of your salon's activity.</p>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-box"><span class="stat-box-number"><%= stats.todayCount %></span><span>Today's Bookings</span></div>
+  <div class="stat-box"><span class="stat-box-number"><%= stats.weekCount %></span><span>This Week</span></div>
+  <div class="stat-box"><span class="stat-box-number"><%= stats.monthCount %></span><span>This Month</span></div>
+  <div class="stat-box"><span class="stat-box-number"><%= stats.artistCount %></span><span>Active Artists</span></div>
+  <div class="stat-box"><span class="stat-box-number"><%= stats.serviceCount %></span><span>Active Services</span></div>
+  <div class="stat-box"><span class="stat-box-number"><%= stats.pendingCount %></span><span>Pending Verification</span></div>
+</div>
+
+<div class="dash-section">
+  <h3>Recent Bookings</h3>
+  <% if (!recentBookings.length) { %>
+    <p class="empty-state">No bookings yet.</p>
+  <% } else { %>
+    <table class="data-table">
+      <thead><tr><th>Customer</th><th>Artist</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+      <tbody>
+        <% recentBookings.forEach(function(b) { %>
+          <tr>
+            <td><%= b.customerName %></td>
+            <td><%= b.artist && b.artist.user ? b.artist.user.name : '-' %></td>
+            <td><%= b.service ? b.service.name : '-' %></td>
+            <td><%= b.date %></td>
+            <td><%= b.time %></td>
+            <td><span class="status-pill status-<%= b.status %>"><%= b.status %></span></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
