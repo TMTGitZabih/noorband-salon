@@ -17,8 +17,6 @@ router.post('/book', bookingRules, (req, res, next) => {
   next();
 }, bookingController.createBooking);
 
-router.get('/book/verify/:id', bookingController.showVerifyForm);
-router.post('/book/verify/:id', bookingController.verifyOtp);
-router.post('/book/verify/:id/resend', bookingController.resendOtp);
+router.get('/book/confirmed/:id', bookingController.showConfirmation);
 
 module.exports = router;

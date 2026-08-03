@@ -1,9 +1,15 @@
 // models/User.js
 // Shared account model for both Admin and Artist logins.
 // Artist-specific profile data lives in models/Artist.js, linked by userId.
+//
+// NOTE: Passwords are stored in PLAIN TEXT (no hashing). This is a deliberate
+// simplification so passwords can be viewed/edited directly in MongoDB
+// (e.g. via mongosh or Atlas) without needing to generate a hash first.
+// This trades away real security -- do not reuse this pattern for a site
+// handling sensitive data. Anyone with database access can read every
+// password as-is.
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,16 +30,11 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash password before saving, only if it changed.
-userSchema.pre('save', async function hashPassword(next) {
-  if (!this.isModified('password')) return next();
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
+// Plain-text comparison. Kept as a method (rather than inlining `===`
+// everywhere it's used) so the rest of the app doesn't need to change if
+// hashing is ever added back later.
 userSchema.methods.comparePassword = function comparePassword(candidate) {
-  return bcrypt.compare(candidate, this.password);
+  return Promise.resolve(candidate === this.password);
 };
 
 module.exports = mongoose.model('User', userSchema);

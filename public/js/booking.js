@@ -1,17 +1,12 @@
 // public/js/booking.js
-// Handles the booking form (dynamic availability + AJAX submit) and the
-// OTP verification page (verify + resend). Both live under /public/js so a
-// single file is loaded on both pages; each block checks the DOM exists
-// before wiring up.
+// Handles the booking form: loads live availability as the customer picks an
+// artist/service/date, then submits the booking via AJAX. Bookings confirm
+// immediately -- there is no verification step.
 
 document.addEventListener('DOMContentLoaded', function () {
   wireBookingForm();
-  wireVerifyForm();
 });
 
-// ---------------------------------------------------------------------
-// Booking form (views/booking.ejs)
-// ---------------------------------------------------------------------
 function wireBookingForm() {
   var form = document.getElementById('bookingForm');
   if (!form) return;
@@ -98,7 +93,7 @@ function wireBookingForm() {
         if (!result.data.success) {
           showAlert(result.data.message || 'Something went wrong. Please try again.');
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Request Appointment';
+          submitBtn.textContent = 'Confirm Appointment';
           if (result.status === 409) refreshAvailability();
           return;
         }
@@ -107,67 +102,7 @@ function wireBookingForm() {
       .catch(function () {
         showAlert('Network error. Please check your connection and try again.');
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Request Appointment';
+        submitBtn.textContent = 'Confirm Appointment';
       });
   });
-}
-
-// ---------------------------------------------------------------------
-// OTP verification page (views/booking-verify.ejs)
-// ---------------------------------------------------------------------
-function wireVerifyForm() {
-  var form = document.getElementById('verifyForm');
-  if (!form) return;
-
-  var alertBox = document.getElementById('verifyAlert');
-  var resendBtn = document.getElementById('resendOtp');
-
-  function showAlert(message) {
-    alertBox.textContent = message;
-    alertBox.style.display = 'block';
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var bookingId = form.getAttribute('data-booking-id');
-    var otp = document.getElementById('otp').value.trim();
-
-    fetch('/book/verify/' + bookingId, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ otp: otp })
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data.success) {
-          showAlert(data.message || 'Invalid code. Please try again.');
-          return;
-        }
-        window.location.href = data.redirectTo;
-      })
-      .catch(function () {
-        showAlert('Network error. Please try again.');
-      });
-  });
-
-  if (resendBtn) {
-    resendBtn.addEventListener('click', function () {
-      var bookingId = resendBtn.getAttribute('data-booking-id');
-      resendBtn.disabled = true;
-      resendBtn.textContent = 'Sending...';
-
-      fetch('/book/verify/' + bookingId + '/resend', { method: 'POST' })
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          resendBtn.disabled = false;
-          resendBtn.textContent = 'Resend Code';
-          showAlert(data.message || (data.success ? 'A new code was sent.' : 'Could not resend code.'));
-        })
-        .catch(function () {
-          resendBtn.disabled = false;
-          resendBtn.textContent = 'Resend Code';
-          showAlert('Network error. Please try again.');
-        });
-    });
-  }
 }

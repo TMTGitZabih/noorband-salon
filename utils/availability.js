@@ -39,15 +39,11 @@ async function getAvailableSlots(artist, dateStr, durationMinutes) {
     candidateSlots.push(toHHMM(t));
   }
 
-  // Existing bookings that block the day: confirmed/completed always block,
-  // and pending-verification bookings block only while their OTP hold is
-  // still valid (not older than 10 minutes) so abandoned holds free up.
-  const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+  // Existing confirmed/completed bookings block their time slot.
   const existing = await Booking.find({
     artist: artist._id,
     date: dateStr,
-    status: { $in: ['confirmed', 'completed', 'pending_verification'] },
-    $or: [{ status: { $in: ['confirmed', 'completed'] } }, { createdAt: { $gte: tenMinutesAgo } }]
+    status: { $in: ['confirmed', 'completed'] }
   }).select('time');
 
   const takenTimes = new Set(existing.map((b) => b.time));

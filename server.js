@@ -3,11 +3,6 @@
 // starts the HTTP server.
 
 require('dotenv').config();
-const app = express();
-
-app.set('trust proxy', 1);
-
-connectDB();
 
 const express = require('express');
 const path = require('path');
@@ -26,7 +21,16 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const artistDashboardRoutes = require('./routes/artistDashboardRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
+const app = express();
 
+// Render (and most PaaS hosts) sit behind a reverse proxy that terminates
+// HTTPS and forwards plain HTTP to the app. Without this, Express can't
+// correctly detect that the original request was secure, which breaks
+// "secure" session cookies -- they get created but the browser silently
+// refuses to store/send them back, causing infinite login redirects.
+app.set('trust proxy', 1);
+
+connectDB();
 
 // ----- View engine -----
 app.set('view engine', 'ejs');
@@ -59,7 +63,14 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 8, // 8 hours
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production'
+      // 'auto' asks express-session to check req.secure per-request instead
+      // of a hardcoded true/false. Combined with `trust proxy` above, this
+      // correctly detects HTTPS behind Render's proxy. A hardcoded `secure:
+      // true` was the actual cause of the login redirect loop: it marked
+      // the cookie Secure unconditionally, and in this proxied setup the
+      // app couldn't confirm the request was really HTTPS, so the cookie
+      // was being rejected.
+      secure: 'auto'
     }
   })
 );

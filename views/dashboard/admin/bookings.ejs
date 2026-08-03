@@ -5,7 +5,6 @@
 <form class="filter-bar" method="GET" action="/admin/bookings">
   <select name="status" onchange="this.form.submit()">
     <option value="">All Statuses</option>
-    <option value="pending_verification" <%= filterStatus === 'pending_verification' ? 'selected' : '' %>>Pending Verification</option>
     <option value="confirmed" <%= filterStatus === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
     <option value="completed" <%= filterStatus === 'completed' ? 'selected' : '' %>>Completed</option>
     <option value="cancelled" <%= filterStatus === 'cancelled' ? 'selected' : '' %>>Cancelled</option>

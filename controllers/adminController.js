@@ -24,7 +24,7 @@ exports.dashboard = async (req, res, next) => {
 
     const startOfMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
 
-    const [artistCount, serviceCount, todayCount, weekCount, monthCount, recentBookings, pendingCount] =
+    const [artistCount, serviceCount, todayCount, weekCount, monthCount, recentBookings] =
       await Promise.all([
         Artist.countDocuments({ isActive: true }),
         Service.countDocuments({ isActive: true }),
@@ -35,14 +35,13 @@ exports.dashboard = async (req, res, next) => {
           .sort({ createdAt: -1 })
           .limit(8)
           .populate({ path: 'artist', populate: { path: 'user', select: 'name' } })
-          .populate('service'),
-        Booking.countDocuments({ status: 'pending_verification' })
+          .populate('service')
       ]);
 
     res.render('dashboard/admin/dashboard', {
       title: 'Admin Dashboard',
       layout: 'layouts/dashboard',
-      stats: { artistCount, serviceCount, todayCount, weekCount, monthCount, pendingCount },
+      stats: { artistCount, serviceCount, todayCount, weekCount, monthCount },
       recentBookings
     });
   } catch (err) {

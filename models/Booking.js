@@ -1,7 +1,6 @@
 // models/Booking.js
-// A customer appointment. Includes WhatsApp OTP verification fields so a
-// booking only becomes "confirmed" after the customer proves they own the
-// WhatsApp number they gave us.
+// A customer appointment. Bookings are confirmed immediately on submit --
+// there is no WhatsApp/SMS verification step.
 
 const mongoose = require('mongoose');
 
@@ -23,23 +22,15 @@ const bookingSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ['pending_verification', 'confirmed', 'completed', 'cancelled'],
-      default: 'pending_verification'
-    },
-
-    // WhatsApp OTP verification
-    otpCode: { type: String, select: false },
-    otpExpiresAt: { type: Date, select: false },
-    otpAttempts: { type: Number, default: 0, select: false },
-    verifiedAt: { type: Date }
+      enum: ['confirmed', 'completed', 'cancelled'],
+      default: 'confirmed'
+    }
   },
   { timestamps: true }
 );
 
-// Prevent two CONFIRMED/completed bookings for the same artist at the same
-// date+time. Unverified (pending_verification) holds are allowed to expire
-// via TTL-style cleanup in the booking controller instead of a hard unique
-// index, so a customer who abandons OTP entry doesn't permanently lock a slot.
+// Prevent two confirmed/completed bookings for the same artist at the same
+// date+time.
 bookingSchema.index({ artist: 1, date: 1, time: 1, status: 1 });
 
 module.exports = mongoose.model('Booking', bookingSchema);
