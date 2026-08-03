@@ -3,6 +3,9 @@
 // starts the HTTP server.
 
 require('dotenv').config();
+const app = express();
+
+connectDB();
 
 const express = require('express');
 const path = require('path');
@@ -21,9 +24,7 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const artistDashboardRoutes = require('./routes/artistDashboardRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
-const app = express();
 
-connectDB();
 
 // ----- View engine -----
 app.set('view engine', 'ejs');
