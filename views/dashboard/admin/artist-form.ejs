@@ -16,6 +16,13 @@
     </div>
   </div>
 
+  <label for="profileImage">Profile Photo URL</label>
+  <input type="text" id="profileImage" name="profileImage" placeholder="https://i.imgur.com/example.png" value="<%= artistUser && artistUser.profileImage ? artistUser.profileImage : '' %>" />
+  <% if (artistUser && artistUser.profileImage) { %>
+    <img src="<%= artistUser.profileImage %>" alt="Current photo" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin-top:0.5rem;" />
+  <% } %>
+  <p class="form-hint">Paste a direct image link (e.g. an i.imgur.com URL). Leave blank for no photo.</p>
+
   <% if (!artist) { %>
     <div class="form-row-2">
       <div>

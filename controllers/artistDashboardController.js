@@ -61,7 +61,7 @@ exports.profile = async (req, res, next) => {
 exports.updateProfile = async (req, res, next) => {
   try {
     const artist = await getOwnArtistProfile(req);
-    const { bio, experienceYears, specialties, phone } = req.body;
+    const { bio, experienceYears, specialties, phone, profileImage } = req.body;
 
     artist.bio = bio || '';
     artist.experienceYears = Number(experienceYears) || 0;
@@ -71,9 +71,10 @@ exports.updateProfile = async (req, res, next) => {
       .filter(Boolean);
     await artist.save();
 
-    if (phone) {
-      await User.findByIdAndUpdate(req.session.userId, { phone });
-    }
+    await User.findByIdAndUpdate(req.session.userId, {
+      phone: phone || undefined,
+      profileImage: profileImage || ''
+    });
 
     res.render('dashboard/artist/profile', {
       title: 'My Profile',

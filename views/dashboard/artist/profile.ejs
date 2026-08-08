@@ -8,6 +8,13 @@
 <div class="dash-grid-2">
   <form action="/artist/profile" method="POST" class="card dash-form">
     <h3>Profile Details</h3>
+
+    <label for="profileImage">Profile Photo URL</label>
+    <input type="text" id="profileImage" name="profileImage" placeholder="https://i.imgur.com/example.png" value="<%= artist.user.profileImage || '' %>" />
+    <% if (artist.user.profileImage) { %>
+      <img src="<%= artist.user.profileImage %>" alt="Current photo" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0.5rem 0;" />
+    <% } %>
+
     <label for="phone">Phone Number</label>
     <input type="tel" id="phone" name="phone" value="<%= artist.user.phone %>" />
 

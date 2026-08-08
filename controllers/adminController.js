@@ -78,7 +78,7 @@ exports.newArtistForm = async (req, res, next) => {
 
 exports.createArtist = async (req, res, next) => {
   try {
-    const { name, email, password, phone, bio, experienceYears, specialties, services } = req.body;
+    const { name, email, password, phone, profileImage, bio, experienceYears, specialties, services } = req.body;
 
     const existing = await User.findOne({ email: email.toLowerCase().trim() });
     if (existing) {
@@ -93,7 +93,7 @@ exports.createArtist = async (req, res, next) => {
       });
     }
 
-    const user = await User.create({ name, email, password, role: 'artist', phone });
+    const user = await User.create({ name, email, password, role: 'artist', phone, profileImage: profileImage || undefined });
 
     await Artist.create({
       user: user._id,
@@ -132,11 +132,11 @@ exports.editArtistForm = async (req, res, next) => {
 
 exports.updateArtist = async (req, res, next) => {
   try {
-    const { name, phone, bio, experienceYears, specialties, services, isActive } = req.body;
+    const { name, phone, profileImage, bio, experienceYears, specialties, services, isActive } = req.body;
     const artist = await Artist.findById(req.params.id);
     if (!artist) return res.status(404).render('errors/404', { title: 'Artist not found' });
 
-    await User.findByIdAndUpdate(artist.user, { name, phone });
+    await User.findByIdAndUpdate(artist.user, { name, phone, profileImage: profileImage || undefined });
 
     artist.bio = bio || '';
     artist.experienceYears = Number(experienceYears) || 0;
