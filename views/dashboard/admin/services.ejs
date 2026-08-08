@@ -52,7 +52,7 @@
         <% services.forEach(function(s) { %>
           <tr data-service-row="<%= s._id %>">
             <td><%= s.name %></td>
-            <td>$<%= s.price %></td>
+            <td>Rs <%= s.price %></td>
             <td>
               <form action="/admin/services/<%= s._id %>" method="POST" class="inline-toggle-form">
                 <input type="hidden" name="name" value="<%= s.name %>" />

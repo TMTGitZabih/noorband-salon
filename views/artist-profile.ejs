@@ -18,7 +18,7 @@
       <h3>Services Offered</h3>
       <ul class="checklist">
         <% (artist.services || []).forEach(function(s) { %>
-          <li><%= s.name %> &mdash; $<%= s.price %></li>
+          <li><%= s.name %> &mdash; Rs <%= s.price %></li>
         <% }) %>
         <% if (!artist.services || !artist.services.length) { %>
           <li>Services coming soon</li>

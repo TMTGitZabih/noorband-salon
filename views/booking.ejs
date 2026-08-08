@@ -25,7 +25,7 @@
           <select id="serviceId" name="serviceId" required>
             <option value="">Select a service</option>
             <% services.forEach(function(s) { %>
-              <option value="<%= s._id %>" data-duration="<%= s.durationMinutes %>"><%= s.name %> ($<%= s.price %>, <%= s.durationMinutes %> min)</option>
+              <option value="<%= s._id %>" data-duration="<%= s.durationMinutes %>"><%= s.name %> (Rs <%= s.price %>, <%= s.durationMinutes %> min)</option>
             <% }) %>
           </select>
         </div>
