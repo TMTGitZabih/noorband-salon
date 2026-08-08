@@ -207,6 +207,18 @@ img { max-width: 100%; display: block; }
   background-color: var(--color-primary-light);
 }
 .service-card .card-body { padding: 1.25rem; }
+.service-category-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+}
 .card-meta { display: flex; justify-content: space-between; margin: 0.75rem 0; font-weight: 600; }
 .card-meta .price { color: var(--color-primary); }
 .card-meta .duration { color: var(--color-text-light); font-weight: 400; }
@@ -354,7 +366,11 @@ input:focus, select:focus, textarea:focus {
   .hero-content { margin: 0 auto; }
   .hero-actions { justify-content: center; }
   .form-row-2 { grid-template-columns: 1fr; }
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .grid-2, .grid-4 { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .grid-3 { grid-template-columns: 1fr; }
 }
