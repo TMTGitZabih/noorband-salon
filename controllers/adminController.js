@@ -224,6 +224,20 @@ exports.createService = async (req, res, next) => {
   }
 };
 
+exports.editServiceForm = async (req, res, next) => {
+  try {
+    const service = await Service.findById(req.params.id);
+    if (!service) return res.status(404).render('errors/404', { title: 'Service not found' });
+    res.render('dashboard/admin/service-form', {
+      title: 'Edit Service',
+      layout: 'layouts/dashboard',
+      service
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.updateService = async (req, res, next) => {
   try {
     const { name, category, description, price, durationMinutes, image, isActive } = req.body;

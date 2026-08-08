@@ -22,6 +22,7 @@ router.post('/artists/:id/reset-password', controller.resetArtistPassword);
 // Services
 router.get('/services', controller.listServices);
 router.post('/services', controller.createService);
+router.get('/services/:id/edit', controller.editServiceForm);
 router.post('/services/:id', controller.updateService);
 router.delete('/services/:id', controller.deleteService);
 

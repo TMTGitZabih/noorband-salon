@@ -1,4 +1,7 @@
 // controllers/authController.js
+// Handles login/logout for both Admin and Artist roles. There is no public
+// signup: admins create artist accounts from the Admin Dashboard.
+
 const User = require('../models/User');
 
 exports.showLogin = (req, res) => {
@@ -9,23 +12,12 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const lookupEmail = email.toLowerCase().trim();
-    const user = await User.findOne({ email: lookupEmail });
-
-    console.log('[LOGIN DEBUG] submitted email:', JSON.stringify(email));
-    console.log('[LOGIN DEBUG] looked up as:', JSON.stringify(lookupEmail));
-    console.log('[LOGIN DEBUG] user found:', !!user);
-    if (user) {
-      console.log('[LOGIN DEBUG] submitted password:', JSON.stringify(password));
-      console.log('[LOGIN DEBUG] stored password:', JSON.stringify(user.password));
-    }
-
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
     if (!user || !user.isActive) {
       return res.status(401).render('login', { title: 'Login', error: 'Invalid email or password' });
     }
 
     const isMatch = await user.comparePassword(password);
-    console.log('[LOGIN DEBUG] isMatch:', isMatch);
     if (!isMatch) {
       return res.status(401).render('login', { title: 'Login', error: 'Invalid email or password' });
     }

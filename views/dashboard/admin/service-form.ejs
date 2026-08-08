@@ -1,0 +1,42 @@
+<div class="dash-header">
+  <h2>Edit Service</h2>
+</div>
+
+<form action="/admin/services/<%= service._id %>" method="POST" class="card dash-form" style="max-width:520px">
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" value="<%= service.name %>" required />
+
+  <label for="category">Category</label>
+  <select id="category" name="category">
+    <% ['Makeup','Hair Styling','Hair Coloring','Hair Cutting','Facial','Skincare','Eyebrows','Henna','Other'].forEach(function(c) { %>
+      <option <%= service.category === c ? 'selected' : '' %>><%= c %></option>
+    <% }) %>
+  </select>
+
+  <label for="description">Description</label>
+  <textarea id="description" name="description" rows="3"><%= service.description %></textarea>
+
+  <div class="form-row-2">
+    <div>
+      <label for="price">Price</label>
+      <input type="number" id="price" name="price" min="0" step="0.01" value="<%= service.price %>" required />
+    </div>
+    <div>
+      <label for="durationMinutes">Duration (minutes)</label>
+      <input type="number" id="durationMinutes" name="durationMinutes" min="15" step="15" value="<%= service.durationMinutes %>" required />
+    </div>
+  </div>
+
+  <label for="image">Image URL</label>
+  <input type="text" id="image" name="image" placeholder="https://i.imgur.com/example.png" value="<%= service.image || '' %>" />
+  <% if (service.image) { %>
+    <img src="<%= service.image %>" alt="Current photo" style="width:100px;height:100px;border-radius:8px;object-fit:cover;margin-top:0.5rem;" />
+  <% } %>
+
+  <label class="wh-check" style="margin-top:1rem">
+    <input type="checkbox" name="isActive" <%= service.isActive ? 'checked' : '' %> />
+    Active (visible on the site)
+  </label>
+
+  <button type="submit" class="btn btn-primary" style="margin-top:1rem">Save Service</button>
+</form>
