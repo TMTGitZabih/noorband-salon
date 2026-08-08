@@ -5,3 +5,4 @@ npm-debug.log*
 *.log
 /public/images/uploads/*
 !/public/images/uploads/.gitkeep
+picture/
